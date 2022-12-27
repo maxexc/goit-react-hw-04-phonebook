@@ -4,6 +4,8 @@ import PhonebookForm from 'components/PhonebookForm/PhonebookForm';
 import React, { useState, useEffect } from 'react'
 import { Container } from './App.styled';
 import  ContactsData from 'components/ContactsData.json'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const GET_LS_CONTACTS = JSON.parse(localStorage.getItem('contacts'));
@@ -24,24 +26,26 @@ const formSubmitHandler = event => {
       number: event.number,
     };
     const contactsLists = [...contacts];
-    console.log(event);
+    // console.log(event);
 
     if (
       contactsLists.find(
         contacts => newContact.name.toLowerCase() === contacts.name.toLowerCase()
       )) {
-      alert(`${newContact.name} is already in contacts.`);
+        toast.warning(`${newContact.name} is already in contacts.`);
       return;
     } 
     
     setContacts(state => [ newContact, ...state]);
     console.log("contactsLists: ", contactsLists);
+    toast.success(`${newContact.name} successfully added in contacts.`)
   }
 
   
 const handleDelete = selectedId => {
     setContacts(
       contacts.filter(contact => contact.id !== selectedId),
+      toast.error(`Contact removed from List.`)
     );
   };
 
@@ -67,6 +71,7 @@ const getVisibleContacts = () => {
           contactsFiltred={getVisibleContacts()}
           handleDelete={handleDelete}
         ></Contacts>
+        <ToastContainer autoClose={2000} position="top-right" theme="light" />
       </Container>
   )
 }
