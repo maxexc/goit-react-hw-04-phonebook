@@ -45,7 +45,7 @@ const formSubmitHandler = event => {
 const handleDelete = selectedId => {
     setContacts(
       contacts.filter(contact => contact.id !== selectedId),
-      toast.error(`Contact removed from List.`)
+      toast.error(`Contact is removed from List.`)
     );
   };
 
